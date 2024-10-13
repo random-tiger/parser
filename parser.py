@@ -10,29 +10,19 @@ import faiss
 import concurrent.futures
 from sklearn.preprocessing import normalize
 
-# Define the system prompt
-system_prompt = """
-You will receive an image of a PDF page or slide. Your task is to transcribe the text and provide a detailed description of any visual elements, such as charts, figures, pictures, or drawings, in a way that allows a blind person to fully understand the content and meaning.
+# Define the path to the Poppler binaries
+poppler_path = os.path.join(os.getcwd(), "poppler_binaries", "bin")
 
-- Focus on conveying the content clearly, without referring to the format (e.g., do not mention "chart" or "diagram"). Instead, describe what the elements show and what the text communicates.
-- Be concise yet thorough, ensuring that nothing crucial is missed, as your audience cannot see the image.
-- Ignore any irrelevant details, such as page numbers or element positions.
+# Convert PDF to images using the local Poppler binaries
+images = convert_from_path("temp.pdf", poppler_path=poppler_path)
 
-Output Format:
-
-- If the image includes a title, format your response as:
-
-  {TITLE}
-
-  {Content description}
-
-- If no clear title is present, simply provide the content description.
-"""
+# Pull OpenAI API key from Streamlit secrets
+OPENAI_API_KEY = st.secrets["openai"]["api_key"]
 
 # Set the models and API key
-CHAT_MODEL = "gpt-4"
+CHAT_MODEL = "gpt-4o"
 EMBEDDING_MODEL = "text-embedding-3-large"
-client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY", "<your OpenAI API key if not set as an env var>"))
+client = OpenAI(api_key=OPENAI_API_KEY)
 
 # Function to encode image from PIL Image object
 def encode_image_from_pil(image):
