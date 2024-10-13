@@ -30,7 +30,7 @@ Output Format:
 """
 
 # Set the models and API key
-CHAT_MODEL = "gpt-4"
+CHAT_MODEL = "gpt-4o"
 EMBEDDING_MODEL = "text-embedding-3-large"
 client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY", "<your OpenAI API key if not set as an env var>"))
 
