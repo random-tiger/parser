@@ -10,6 +10,12 @@ import faiss
 import concurrent.futures
 from sklearn.preprocessing import normalize
 
+# Define the path to the Poppler binaries
+poppler_path = os.path.join(os.getcwd(), "poppler_binaries", "bin")
+
+# Convert PDF to images using the local Poppler binaries
+images = convert_from_path("temp.pdf", poppler_path=poppler_path)
+
 # Pull OpenAI API key from Streamlit secrets
 OPENAI_API_KEY = st.secrets["openai"]["api_key"]
 
