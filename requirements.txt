@@ -1,0 +1,9 @@
+pdf2image
+openai
+Pillow
+tqdm
+langchain
+faiss-cpu
+langchain-community
+pandas
+numpy
